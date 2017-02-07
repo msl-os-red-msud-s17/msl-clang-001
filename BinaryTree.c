@@ -103,10 +103,8 @@ int main() {
     
     printf("Obliterating tree");
 
-    printf("Address before free: %X\n", (int) root);
     freeTree(root);
     
-    printf("Address after free: %X\n", (int) root);
     return 1;
 }
 
