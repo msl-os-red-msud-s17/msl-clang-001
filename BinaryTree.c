@@ -9,7 +9,9 @@ typedef struct bstNode {
     struct bstNode *right;
 } bstNode;
 
-bstNode* createNode(char * string) {
+void displayInOrder(bstNode *);
+
+bstNode * createNode(char * string) {
     bstNode* tempNode = (bstNode*) malloc(sizeof(bstNode));
     tempNode->word = (char *) malloc(sizeof(string));
     strcpy(tempNode->word, string);
@@ -57,19 +59,22 @@ void search(bstNode* root, char* word) {
 }
 
 void freeTree(bstNode * root) {
-        if (root->left) {
-            free(root->left);
-        }
-        if (root->right) {
-            free(root->right);
-        }
-        free(root);
-        free(root->word);
-	printf("Tree freed from memory\n");
+    if (root != NULL) {
+            if (root->left) {
+                    free(root->left);
+            }   
+            if (root->right) {
+                    free(root->right);
+            }
+            free(root);
+            free(root->word);
+        printf("Tree freed from memory\n");
+    }
 }
 
-void readWords(const char *filename, bstNode *root, int max_number_of_words)
-{
+
+void readWords(const char *filename, bstNode *root, int max_number_of_words) {
+    
     FILE *f = fopen(filename, "rt");
     int i;
     char temp[100]; // assumption words are not longer than 100
@@ -87,13 +92,43 @@ void readWords(const char *filename, bstNode *root, int max_number_of_words)
     fclose(f);
 }
 
+/*
+ * Reads words from a file and inserts them into a tree in
+ * alphabetical order. 
+ * Returns root node of the tree.
+ */
+bstNode * readWordsFromFile(const char *filename, bstNode * node) {
+    
+    if (node == NULL) {
+    	char * wordRead = (char *) malloc(sizeof(char *));
+    
+    	if (filename != NULL) {
+    		FILE *file = fopen(filename, "rt");
+
+    		// Read a word from the file
+    		while(fscanf(file, "%s", wordRead) != EOF) {
+			if (wordRead == NULL) {break;}
+
+			node = insert(node, wordRead);
+    		}
+		free(wordRead);
+    		fclose(file);
+    	}
+    } // else {Trying to add second file to tree. do nothing}
+
+    return node;
+}
+
 void outputFile(bstNode *tree) {
   
 }
+
 int main(int argc, char **argv) {
     bstNode *root = NULL;
     char userword[50];
+    char * wordFromFile = (char *) malloc(sizeof(char *));
 
+    /*
     while (1) {
         printf("Enter word to add to tree ('esc' to stop): ");
         scanf("%s", userword);
@@ -101,7 +136,13 @@ int main(int argc, char **argv) {
         root = insert(root, userword);
         displayInOrder(root);
     }
-    
+    */
+ 
+    printf("Reading from file...\n");
+    root = readWordsFromFile("input02.txt", root);
+
+    displayInOrder(root);
+    free(wordFromFile);
     freeTree(root);
     
     exit(0);
