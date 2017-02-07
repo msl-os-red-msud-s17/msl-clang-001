@@ -12,8 +12,6 @@ typedef struct node {
   struct node *leftNode, *rightNode;
   } node;
   
-node *root;
-  
 void insert(node* currentNode,char *string){
   node *temp = NULL;
 
@@ -22,8 +20,8 @@ void insert(node* currentNode,char *string){
   temp->word = string;
   temp->count = 1;
     
-  if(root = NULL){
-    root = temp;
+  if(currentNode = NULL){
+    currentNode = temp;
     return;
   }
 
@@ -68,5 +66,6 @@ void outputFile(node *tree) {
 }
 
 int main(int *argc,char **argv) {
+  node *root = NULL;
   exit(0);
 }
