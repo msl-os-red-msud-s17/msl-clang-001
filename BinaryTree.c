@@ -69,7 +69,7 @@ void freeTree(bstNode * root) {
             }
             free(root);
             free(root->word);
-        printf("Tree freed from memory\n");
+        printf("Tree freed from memory\n\n");
     }
     root = NULL;
 }
@@ -132,7 +132,7 @@ bstNode * readWordsFromFile(const char *filename, bstNode * node) {
 
 		file = fopen(filename, "r");
 
-		if (file != NULL) {
+		if (file != NULL) { // causes a segmentation fault @bug
 
     			// Read a word from the file
     			while(fscanf(file, "%s", wordRead) != EOF) {
@@ -174,7 +174,6 @@ int main(int argc, char **argv) {
         root = insert(root, userword);
         displayInOrder(root);
     }
-    */
  
     printf("Reading from file...\n");
     root = readWordsFromFile("input04.txt", root);
@@ -184,14 +183,13 @@ int main(int argc, char **argv) {
     freeTree(root);
     //free(root);
     	
-	/*
     root = NULL;
     printf("READING SECOND FILE....\n");
     root = readWordsFromFile("input04.txt", root);
     displayInOrder(root);
     freeTree(root);
-	*/
-    /*
+    */
+
     char * inputfile;
     char * index;
 
@@ -210,11 +208,10 @@ int main(int argc, char **argv) {
 
 	root = readWordsFromFile(inputfile, root);
 	displayInOrder(root);
-	//freeTree(root);
+	freeTree(root);
 	
 	root = NULL;
     } 
-    */
 
     exit(0);
 }
