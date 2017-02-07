@@ -65,6 +65,7 @@ void freeTree(bstNode * root) {
         }
         free(root);
         free(root->word);
+	printf("Tree freed from memory\n");
 }
 
 void readWords(const char *filename, bstNode *root, int max_number_of_words)
@@ -89,7 +90,7 @@ void readWords(const char *filename, bstNode *root, int max_number_of_words)
 void outputFile(bstNode *tree) {
   
 }
-int main() {
+int main(int argc, char **argv) {
     bstNode *root = NULL;
     char userword[50];
 
@@ -105,6 +106,7 @@ int main() {
 
     freeTree(root);
     
-    return 1;
+    exit(0);
+    
 }
 
