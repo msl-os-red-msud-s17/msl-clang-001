@@ -70,6 +70,7 @@ void freeTree(bstNode * root) {
             free(root->word);
         printf("Tree freed from memory\n");
     }
+    root = NULL;
 }
 
 
@@ -90,6 +91,26 @@ void readWords(const char *filename, bstNode *root, int max_number_of_words) {
         insert(root, strdup(temp));
     }
     fclose(f);
+}
+
+// get index of filename
+char * getIndexOf(char * filename) {
+        char * index;
+        index = (char *) malloc(sizeof(char));
+        int i = 0;
+
+        if (filename != NULL) {
+                while(filename[i] != '\0') {
+                        if (filename[i] >= 48 && filename[i] <= 57) {
+                                index = strncat(index, &filename[i], 1);
+                                printf("filename[i]: %d\n", filename[i]);
+                                printf("Index: %s\n", index);
+                        }
+                        i++;
+                }      
+        }
+        free(index);
+        return index;
 }
 
 /*
@@ -138,13 +159,30 @@ int main(int argc, char **argv) {
     }
     */
  
+    /*
     printf("Reading from file...\n");
     root = readWordsFromFile("input02.txt", root);
 
     displayInOrder(root);
     free(wordFromFile);
     freeTree(root);
+    //free(root);
     
+    root = NULL;
+    printf("READING SECOND FILE....\n");
+    root = readWordsFromFile("input04.txt", root);
+    displayInOrder(root);
+    freeTree(root);
+    */
+
+    char * inputfile = (char *) malloc(sizeof(char *));
+
+    // iterate over input file arguments
+    for (int i = 1; i < argc; i++) {
+	inputfile = argv[i];
+	printf("argument %d: %s\n", i, inputfile);
+    } 
+
     exit(0);
 }
 
