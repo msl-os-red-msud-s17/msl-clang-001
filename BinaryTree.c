@@ -189,7 +189,10 @@ void outputFile(bstNode *tree) {
   
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char *argv[]) {
+  int i;
+ 
+  for (i = 1; i < argc; i++) {
     bstNode *root = NULL;
     char userword[50];
     char * wordFromFile = (char *) malloc(sizeof(char *));
@@ -205,12 +208,12 @@ int main(int argc, char **argv) {
     */
  
     printf("Reading from file...\n");
-    root = readWordsFromFile("input02.txt", root);
+    root = readWordsFromFile(argv[i], root);
 
     displayInOrder(root);
     free(wordFromFile);
     freeTree(root);
-    
-    exit(0);
+  }
+  exit(0);
 }
 
