@@ -1,3 +1,11 @@
+//BinaryTree.c
+/*
+ * Binary Tree project for Operating Sytems.
+ * @verion: 2/7/17
+ * @authors: Brian Sherer, Anthony Ales, 
+ *           Alex Jones, Logan Nagel
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -11,6 +19,18 @@ typedef struct bstNode {
 
 void displayInOrder(bstNode *);
 
+/*
+ * Function: createNode
+ *-----------------------
+ * Creates a node with a char array(string) and NULL
+ * children(left and right pointers). Initializes the
+ * count to 1 to siginify 1 occurance of this string in 
+ * the tree.
+ * 
+ * string: address of the first char in the string
+ *
+ * returns: bstNode with variables initialized.
+ */
 bstNode * createNode(char * string) {
     bstNode* tempNode = (bstNode*) malloc(sizeof(bstNode));
     tempNode->word = (char *) malloc(sizeof(string));
@@ -21,6 +41,19 @@ bstNode * createNode(char * string) {
     return tempNode;
 }
 
+/*
+ * Function: insert
+ *-----------------------
+ * Inserts a char array(word) into a binary tree based
+ * on lexographical value. Creates root of tree if the 
+ * node passed in is NULL.
+ * 
+ * node: address of root of tree.
+ * word: address of the first char in the string to be
+ *       added
+ *
+ * returns: the bstNode that is the root of tree
+ */
 bstNode * insert(bstNode *node, char* word) {
     if (node == NULL) {
         node = createNode(word);
@@ -34,6 +67,13 @@ bstNode * insert(bstNode *node, char* word) {
     return node;
 } 
 
+/*
+ * Function: displayInOrder
+ *-----------------------
+ * TODO (Function might change)
+ * 
+ * root: address of the root of the binary tree
+ */
 void displayInOrder(bstNode* root) {
     if (root->left != NULL) { 
         displayInOrder(root->left);
@@ -44,6 +84,15 @@ void displayInOrder(bstNode* root) {
     }   
 }
 
+/*
+ * Function: search
+ *-----------------------
+ * TODO (function not needed for final product)
+ * 
+ * root: root of binary tree to search
+ *
+ * word: address of first char in string
+ */
 void search(bstNode* root, char* word) {
     if (root != NULL) {
         if (strcmp(word, root->word) == 0) {
@@ -58,21 +107,32 @@ void search(bstNode* root, char* word) {
     }
 }
 
+/*
+ * Function: freeTree
+ *-----------------------
+ * Frees the memory allocated to the tree.
+ * 
+ * root: root of three to free
+ */
 void freeTree(bstNode * root) {
     if (root != NULL) {
-            if (root->left) {
-                    free(root->left);
-            }   
-            if (root->right) {
-                    free(root->right);
-            }
-            free(root);
-            free(root->word);
+        if (root->left) {
+            free(root->left);
+        }   
+        if (root->right) {
+            free(root->right);
+        }
+        free(root);
+        free(root->word);
         printf("Tree freed from memory\n");
     }
 }
 
-
+/*
+ * Function: readWords
+ *-----------------------
+ * TODO (Function might change/obsolete)
+ */
 void readWords(const char *filename, bstNode *root, int max_number_of_words) {
     
     FILE *f = fopen(filename, "rt");
@@ -93,29 +153,35 @@ void readWords(const char *filename, bstNode *root, int max_number_of_words) {
 }
 
 /*
+ * Function:readWordsFromFile
+ *------------------------
  * Reads words from a file and inserts them into a tree in
- * alphabetical order. 
- * Returns root node of the tree.
+ * alphabetical order.
+ *
+ * filename: file of words you want to convert
+ * node: root of binary tree
+ * 
+ * returns: root node of the tree.
  */
 bstNode * readWordsFromFile(const char *filename, bstNode * node) {
-    
     if (node == NULL) {
-    	char * wordRead = (char *) malloc(sizeof(char *));
-    
-    	if (filename != NULL) {
-    		FILE *file = fopen(filename, "rt");
-
-    		// Read a word from the file
-    		while(fscanf(file, "%s", wordRead) != EOF) {
-			if (wordRead == NULL) {break;}
-
-			node = insert(node, wordRead);
-    		}
-		free(wordRead);
-    		fclose(file);
-    	}
+        char * wordRead = (char *) malloc(sizeof(char *));
+        
+        if (filename != NULL) {
+            FILE *file = fopen(filename, "rt");
+            
+            // Read a word from the file
+            while(fscanf(file, "%s", wordRead) != EOF) {
+                if (wordRead == NULL) {
+                    break;
+                }
+            node = insert(node, wordRead);
+            }
+            free(wordRead);
+            fclose(file);
+        }
     } // else {Trying to add second file to tree. do nothing}
-
+    
     return node;
 }
 
