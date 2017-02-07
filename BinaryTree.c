@@ -10,13 +10,13 @@ typedef struct bstNode {
 } bstNode;
 
 bstNode* createNode(char * string) {
-        bstNode* tempNode = (bstNode*) malloc(sizeof(bstNode));
+    bstNode* tempNode = (bstNode*) malloc(sizeof(bstNode));
     tempNode->word = (char *) malloc(sizeof(string));
     strcpy(tempNode->word, string);
-        tempNode->count = 1;
-        tempNode->left = NULL;
-        tempNode->right = NULL;
-        return tempNode;
+    tempNode->count = 1;
+    tempNode->left = NULL;
+    tempNode->right = NULL;
+    return tempNode;
 }
 
 bstNode * insert(bstNode *node, char* word) {
@@ -56,15 +56,15 @@ void search(bstNode* root, char* word) {
     }
 }
 
-void obliterateTree(bstNode * root) {
+void freeTree(bstNode * root) {
         if (root->left) {
-            obliterateTree(root->left);
+            free(root->left);
         }
         if (root->right) {
-            obliterateTree(root->right);
+            free(root->right);
         }
         free(root);
-        //free(root->word);
+        free(root->word);
 }
 
 void readWords(const char *filename, bstNode *root, int max_number_of_words)
@@ -94,24 +94,17 @@ int main() {
     char userword[50];
 
     while (1) {
-        printf("Enter word to add to tree: ");
+        printf("Enter word to add to tree ('esc' to stop): ");
         scanf("%s", userword);
         if (strcmp("esc", userword) == 0) {break;}
         root = insert(root, userword);
         displayInOrder(root);
     }
     
-    while(1) {
-        printf("Lookup word: ");
-        scanf("%s", userword);
-        if(strcmp("esc", userword) == 0) {break;}
-        search(root, userword);
-    }
-    
     printf("Obliterating tree");
 
     printf("Address before free: %X\n", (int) root);
-    obliterateTree(root);
+    freeTree(root);
     
     printf("Address after free: %X\n", (int) root);
     return 1;
