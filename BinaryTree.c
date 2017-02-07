@@ -102,11 +102,8 @@ int main(int argc, char **argv) {
         displayInOrder(root);
     }
     
-    printf("Obliterating tree");
-
     freeTree(root);
     
     exit(0);
-    
 }
 
