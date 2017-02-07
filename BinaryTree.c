@@ -30,50 +30,63 @@ bstNode * insert(bstNode *node, char* word) {
         node->count++;
     }
     return node;
-} 
+}
 
 void displayInOrder(bstNode* root) {
-    if (root->left != NULL) { 
+    if (root->left != NULL) {
         displayInOrder(root->left);
     }
     printf("[Word: %s, count: %d]\n", root->word, root->count);
     if (root->right != NULL) {
         displayInOrder(root->right);
-    }   
+    }
 }
 
 void search(bstNode* root, char* word) {
     if (root != NULL) {
         if (strcmp(word, root->word) == 0) {
-            printf("Word found: %s\n", root->word); 
+            printf("Word found: %s\n", root->word);
         } else if (strcmp(word, root->word) < 0) {
             search(root->left, word);
         } else if (strcmp(word, root->word) >0) {
             search(root->right, word);
-        } 
+        }
     } else {
         printf("Word NOT found:\n");
     }
 }
 
 void freeTree(bstNode * root) {
-	if (root != NULL) {
-        	if (root->left) {
-            		free(root->left);
-        	}	
-        	if (root->right) {
-            		free(root->right);
-        	}
-        	free(root);
-        	free(root->word);
-		printf("Tree freed from memory\n");
-	}
+    if (root != NULL) {
+        if (root->left) {
+            free(root->left);
+        }
+        if (root->right) {
+            free(root->right);
+        }
+        free(root);
+        free(root->word);
+        printf("Tree freed from memory\n");
+    }
 }
 
+void readTheIndex(const char *filename, char fileletters[32], int index[2])
+{
+    int i, j;
+    for(i = 0; i < 32; i++)
+    {
+        if(filename[i] < 10)
+        {
+            index[j] = filename[i];
+            i++; j++;
+        }
+        else i++;
+    }
+}
 
 void readWords(const char *filename, bstNode *root, int max_number_of_words) {
-    FILE *f = fopen(filename, "rt");
     int i;
+    FILE *f = fopen(filename, "rt");
     char temp[100]; // assumption words are not longer than 100
 
     for (i = 0; i < max_number_of_words; ++i)
@@ -90,13 +103,12 @@ void readWords(const char *filename, bstNode *root, int max_number_of_words) {
 }
 
 void outputFile(bstNode *tree) {
-  
+
 }
 
 int main(int argc, char **argv) {
     bstNode *root = NULL;
     char userword[50];
-
     while (1) {
         printf("Enter word to add to tree ('esc' to stop): ");
         scanf("%s", userword);
@@ -104,10 +116,8 @@ int main(int argc, char **argv) {
         root = insert(root, userword);
         displayInOrder(root);
     }
-    
 
     freeTree(root);
-    
+    system("pause");
     exit(0);
 }
-
