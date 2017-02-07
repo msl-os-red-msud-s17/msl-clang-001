@@ -9,7 +9,7 @@ typedef struct bstNode {
     struct bstNode *right;
 } bstNode;
 
-bstNode* createNode(char * string) {
+bstNode * createNode(char * string) {
     bstNode* tempNode = (bstNode*) malloc(sizeof(bstNode));
     tempNode->word = (char *) malloc(sizeof(string));
     strcpy(tempNode->word, string);
@@ -57,19 +57,21 @@ void search(bstNode* root, char* word) {
 }
 
 void freeTree(bstNode * root) {
-        if (root->left) {
-            free(root->left);
-        }
-        if (root->right) {
-            free(root->right);
-        }
-        free(root);
-        free(root->word);
-	printf("Tree freed from memory\n");
+	if (root != NULL) {
+        	if (root->left) {
+            		free(root->left);
+        	}	
+        	if (root->right) {
+            		free(root->right);
+        	}
+        	free(root);
+        	free(root->word);
+		printf("Tree freed from memory\n");
+	}
 }
 
-void readWords(const char *filename, bstNode *root, int max_number_of_words)
-{
+
+void readWords(const char *filename, bstNode *root, int max_number_of_words) {
     FILE *f = fopen(filename, "rt");
     int i;
     char temp[100]; // assumption words are not longer than 100
@@ -90,6 +92,7 @@ void readWords(const char *filename, bstNode *root, int max_number_of_words)
 void outputFile(bstNode *tree) {
   
 }
+
 int main(int argc, char **argv) {
     bstNode *root = NULL;
     char userword[50];
@@ -102,6 +105,7 @@ int main(int argc, char **argv) {
         displayInOrder(root);
     }
     
+
     freeTree(root);
     
     exit(0);
