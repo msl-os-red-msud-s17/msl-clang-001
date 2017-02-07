@@ -1,48 +1,73 @@
-/**
- * Binary tree program for OS.
- */
-  
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct node {
-  char *word;
-  int count;
-  struct node *leftNode, *rightNode;
-  } node;
-  
-void insert(node* currentNode,char *string){
-  node *temp = NULL;
+typedef struct bstNode {
+    int     count;
+    char    *word;
+    struct bstNode *left;
+    struct bstNode *right;
+} bstNode;
 
-  temp = (node*)malloc(sizeof(node));
-  temp->leftNode = temp->rightNode = NULL;
-  temp->word = string;
-  temp->count = 1;
-    
-  if(currentNode = NULL){
-    currentNode = temp;
-    return;
-  }
-
-  if(strcmp(temp->word,currentNode->word) < 0) {
-    insert(currentNode->leftNode,temp->word);
-  } else if(strcmp(temp->word,currentNode->word) > 0) {
-    insert(currentNode->rightNode,temp->word);
-  } else {
-    currentNode->count++;
-  }
+bstNode* createNode(char * string) {
+        bstNode* tempNode = (bstNode*) malloc(sizeof(bstNode));
+    tempNode->word = (char *) malloc(sizeof(string));
+    strcpy(tempNode->word, string);
+        tempNode->count = 1;
+        tempNode->left = NULL;
+        tempNode->right = NULL;
+        return tempNode;
 }
 
-void deltree(node * tree) {
- if (tree) {
-   deltree(tree->leftNode);
-   deltree(tree->rightNode);
-   free(tree);
-  }
+bstNode * insert(bstNode *node, char* word) {
+    if (node == NULL) {
+        node = createNode(word);
+    } else if (strcmp(word, node->word) < 0) {
+        node->left = insert(node->left, word);
+    } else if (strcmp(word, node->word) > 0) {
+        node->right = insert(node->right, word);
+    } else {
+        node->count++;
+    }
+    return node;
+} 
+
+void displayInOrder(bstNode* root) {
+    if (root->left != NULL) { 
+        displayInOrder(root->left);
+    }
+    printf("[Word: %s, count: %d]\n", root->word, root->count);
+    if (root->right != NULL) {
+        displayInOrder(root->right);
+    }   
 }
 
-void readWords(const char *filename, node *root, int max_number_of_words)
+void search(bstNode* root, char* word) {
+    if (root != NULL) {
+        if (strcmp(word, root->word) == 0) {
+            printf("Word found: %s\n", root->word); 
+        } else if (strcmp(word, root->word) < 0) {
+            search(root->left, word);
+        } else if (strcmp(word, root->word) >0) {
+            search(root->right, word);
+        } 
+    } else {
+        printf("Word NOT found:\n");
+    }
+}
+
+void obliterateTree(bstNode * root) {
+        if (root->left) {
+            obliterateTree(root->left);
+        }
+        if (root->right) {
+            obliterateTree(root->right);
+        }
+        free(root);
+        //free(root->word);
+}
+
+void readWords(const char *filename, bstNode *root, int max_number_of_words)
 {
     FILE *f = fopen(filename, "rt");
     int i;
@@ -61,11 +86,34 @@ void readWords(const char *filename, node *root, int max_number_of_words)
     fclose(f);
 }
 
-void outputFile(node *tree) {
+void outputFile(bstNode *tree) {
   
 }
+int main() {
+    bstNode *root = NULL;
+    char userword[50];
 
-int main(int *argc,char **argv) {
-  node *root = NULL;
-  exit(0);
+    while (1) {
+        printf("Enter word to add to tree: ");
+        scanf("%s", userword);
+        if (strcmp("esc", userword) == 0) {break;}
+        root = insert(root, userword);
+        displayInOrder(root);
+    }
+    
+    while(1) {
+        printf("Lookup word: ");
+        scanf("%s", userword);
+        if(strcmp("esc", userword) == 0) {break;}
+        search(root, userword);
+    }
+    
+    printf("Obliterating tree");
+
+    printf("Address before free: %X\n", (int) root);
+    obliterateTree(root);
+    
+    printf("Address after free: %X\n", (int) root);
+    return 1;
 }
+
