@@ -175,8 +175,10 @@ bstNode * readWordsFromFile(const char *filename, bstNode * node) {
 	return node;
 }
 
-void outputFile(bstNode *tree, int index) {
-  
+void outputFile(bstNode *tree, int index, FILE *output) {
+  fprintf(output,"The fucking output file");
+  //Needs to be changed to correct format
+  //Return file for main?
 }
 
 int main(int argc, char **argv) {
@@ -184,6 +186,7 @@ int main(int argc, char **argv) {
     bstNode *root = NULL;
     char * inputfile;
     char * index;
+    FILE *outputF;
 
     // iterate over input file arguments
     for (i = 1; i < argc; i++) {
@@ -197,6 +200,13 @@ int main(int argc, char **argv) {
 		exit(0);
 	}
 
+        //******Needs to be put in func? Combine the two?
+	outputF = fopen("Test.txt","w+");
+	outputFile(root,02,outputF);
+        //SHould look like ThisV
+        //outputF = outputFile(root,index);
+        //*******************************
+
 	printf("argument %d: %s\n", i, inputfile);
 	index = strncat(index,&inputfile[5],2);
 
@@ -206,6 +216,7 @@ int main(int argc, char **argv) {
 
 	root = readWordsFromFile(inputfile, root);
 	displayInOrder(root);
+
 	freeTree(root);
 	
 	root = NULL;
