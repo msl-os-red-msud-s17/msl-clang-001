@@ -176,25 +176,16 @@ bstNode * readWordsFromFile(const char *filename, bstNode * node) {
 	return node;
 }
 
-void outputFile(bstNode *tree, char *index, FILE *output) {
-  fprintf(output,"The fucking output file");
-  //Needs to be changed to correct format
-  //Return file for main?
-
-       
-}
-
 FILE * makeOutputFile(bstNode *tree, char * inputfile) {
     
     FILE * output;
-    //char * index = getIndexOf(inputfile);
     char * index = (char *) malloc(sizeof(char *));
+    index = strncat(index, &inputfile[5],2);
     char * outFilename = (char *) malloc(sizeof(char *));
-    strcpy(outFilename, "myoutput");
+    strcpy(outFilename, "output");
     outFilename = strncat(outFilename, index, 2);    
-    //outFilename = strncat(outFilename, ".txt", 4);
+    outFilename = strncat(outFilename, ".txt", 4);
     
-    printf("index: %s\n", index);
     printf("Output file name: %s\n", outFilename);
 
     output = fopen(outFilename, "w+");
@@ -218,47 +209,29 @@ int main(int argc, char **argv) {
     int i;
     bstNode *root = NULL;
     char * inputfile;
-    char * index;
     FILE *outputF;
 
     // iterate over input file arguments
     for (i = 1; i < argc; i++) {
 
+        char *index;
 	inputfile = (char *) malloc(sizeof(char *));
-        index = (char *) malloc(sizeof(char *));
+        index     = (char *) malloc(sizeof(char *));
 	inputfile = argv[i];
 	
 	if(fopen(inputfile,"r") == NULL){
-		printf("File Not Found\n");
-		exit(0);
+	    printf("File Not Found\n\n");
+            continue;
 	}
-
-        //******Needs to be put in func? Combine the two?
-	//outputF = fopen("Test01.txt","w+");
-	//outputFile(root,index,outputF);
-        //SHould look like ThisV
-        //outputF = outputFile(root,index);
-        //*******************************
-
-	printf("argument %d: %s\n", i, inputfile);
-	index = strncat(index,&inputfile[5],2);
-
-	printf("Index %d: %s\n", i, index);
 	
 	printf("Reading from File: %s\n", inputfile);
 
 	root = readWordsFromFile(inputfile, root);
-	displayInOrder(root);
-
 	outputF = makeOutputFile(root, inputfile);
-
-	//format output file
 	displayInOrderToFile(root, outputF);	
-
-	freeTree(root);
-	//free(index);	
+        freeTree(root);
+	free(index);	
 	root = NULL;
     } 
-
     exit(0);
 }
