@@ -15,3 +15,6 @@ As specified by the project requirements this program sucessfully reads words fr
 For most variables we attempted to dynamically allocate them in memory and use pointers to manipulate their values. Doing so resulted in several "segmentation Fault" errors and forced us to evaluate how certain variables and functions are being called and referenced as opposed to other programming languages we were more familiar with such as Java. 
 
 Initally one of the most difficult issues for some members on our team was determining how to properly allocate the tree in memory so that it can be used throughout the program without causing a segmentation fault. 
+
+Our output file was having issues properly parsing and appending the the output file name on some machines.
+

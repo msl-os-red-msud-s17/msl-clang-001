@@ -69,23 +69,6 @@ bstNode * insert(bstNode *node, char* word) {
 } 
 
 /*
- * Function: displayInOrder
- *-----------------------
- * TODO (Function might change)
- * 
- * root: address of the root of the binary tree
- */
-void displayInOrder(bstNode* root) {
-    if (root->left != NULL) { 
-        displayInOrder(root->left);
-    }
-    printf("[Word: %s, count: %d]\n", root->word, root->count);
-    if (root->right != NULL) {
-        displayInOrder(root->right);
-    }   
-}
-
-/*
  * Function: search
  *-----------------------
  * TODO (function not needed for final product)
@@ -128,25 +111,6 @@ void freeTree(bstNode * root) {
         printf("Tree freed from memory\n\n");
     }
     root = NULL;
-}
-
-// get index of filename
-char * getIndexOf(char * filename) {
-    
-    char * index;
-    index = (char *) malloc(sizeof(char));
-    int i = 0;
-    
-    if (filename != NULL) {
-        while(filename[i] != '\0') {
-            if (filename[i] >= 48 && filename[i] <= 57) {
-            	index = strncat(index, &filename[i], 1);
-            }
-            i++;
-        }      
-    }
-    //free(index);
-    return index;
 }
 
 /*
