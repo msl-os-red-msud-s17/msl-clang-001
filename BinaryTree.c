@@ -117,14 +117,14 @@ void search(bstNode* root, char* word) {
  */
 void freeTree(bstNode * root) {
     if (root != NULL) {
-            if (root->left) {
-                    free(root->left);
-            }   
-            if (root->right) {
-                    free(root->right);
-            }
-            free(root);
-            free(root->word);
+    	if (root->left) {
+            free(root->left);
+        }   
+        if (root->right) {
+            free(root->right);
+        }
+        free(root);
+        free(root->word);
         printf("Tree freed from memory\n\n");
     }
     root = NULL;
@@ -132,24 +132,20 @@ void freeTree(bstNode * root) {
 
 // get index of filename
 char * getIndexOf(char * filename) {
-
-        char * index;
-        index = (char *) malloc(sizeof(char));
-        int i = 0;
-
-        if (filename != NULL) {
-                while(filename[i] != '\0') {
-                        if (filename[i] >= 48 && filename[i] <= 57) {
-
-                                index = strncat(index, &filename[i], 1);
-
-                        }
-
-                        i++;
-                }      
-        }
-        free(index);
-        return index;
+	char * index;
+    index = (char *) malloc(sizeof(char));
+    int i = 0;
+    
+    if (filename != NULL) {
+        while(filename[i] != '\0') {
+            if (filename[i] >= 48 && filename[i] <= 57) {
+            	index = strncat(index, &filename[i], 1);
+            }
+            i++;
+        }      
+    }
+    free(index);
+    return index;
 }
 
 /*
