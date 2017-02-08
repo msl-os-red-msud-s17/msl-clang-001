@@ -1,6 +1,7 @@
 ## Operating Systems Concepts: Programming Assignment C1
 
-_data structures and pointers in the C language_ 
+_data structures and pointers in the C language_
+
 _Authors: Brian Sherer, Alex Jones, Logan Nagel, Anthony Ales_
 
 * * * 
