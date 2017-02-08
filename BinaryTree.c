@@ -154,39 +154,25 @@ char * getIndexOf(char * filename) {
  * Returns root node of the tree.
  */
 bstNode * readWordsFromFile(const char *filename, bstNode * node) {
-
-    FILE * file;
-
-    if (node == NULL) {
+	FILE * file;
+	if (node == NULL) {
     	char * wordRead = (char *) malloc(sizeof(char *));
     
     	if (filename != NULL) {
-
-		file = fopen(filename, "r");
-
-		if (file != NULL) { // causes a segmentation fault @bug
-
-    			// Read a word from the file
-    			while(fscanf(file, "%s", wordRead) != EOF) {
-				if (wordRead == NULL) {break;}
-
-					node = insert(node, wordRead);
+    		file = fopen(filename, "r");
+    		// causes a segmentation fault @bug
+    		// Read a word from the file
+    		while(fscanf(file, "%s", wordRead) != EOF) {
+    			if (wordRead == NULL) {
+    				break;
     			}
-			//free(wordRead);
-    			//fclose(file);
-		} else if (file == NULL) { // {file doesn't exist}
-			printf("HEY I SHOULD BE HERE");
+    			node = insert(node, wordRead);
+    		}
+			fclose(file);
 		}
-
-		fclose(file);
-
-    	}
-
-	free(wordRead);
-
-    } // else {Trying to add second file to tree. do nothing}
-
-    return node;
+		free(wordRead);
+	} // else {Trying to add second file to tree. do nothing}
+	return node;
 }
 
 void outputFile(bstNode *tree, int index) {
@@ -196,34 +182,6 @@ void outputFile(bstNode *tree, int index) {
 int main(int argc, char **argv) {
     int i;
     bstNode *root = NULL;
-    char userword[50];
-    char * wordFromFile = (char *) malloc(sizeof(char *));
-
-    /*
-    while (1) {
-        printf("Enter word to add to tree ('esc' to stop): ");
-        scanf("%s", userword);
-        if (strcmp("esc", userword) == 0) {break;}
-        root = insert(root, userword);
-        displayInOrder(root);
-    }
- 
-    printf("Reading from file...\n");
-    root = readWordsFromFile("input04.txt", root);
-
-    displayInOrder(root);
-    free(wordFromFile);
-    freeTree(root);
-
-    //free(root);
-    	
-    root = NULL;
-    printf("READING SECOND FILE....\n");
-    root = readWordsFromFile("input04.txt", root);
-    displayInOrder(root);
-    freeTree(root);
-    */
-
     char * inputfile;
     char * index;
 
@@ -233,8 +191,14 @@ int main(int argc, char **argv) {
 	inputfile = (char *) malloc(sizeof(char *));
         index = (char *) malloc(sizeof(char *));
 	inputfile = argv[i];
+	
+	if(fopen(inputfile,"r") == NULL){
+		printf("File Not Found\n");
+		exit(0);
+	}
+
 	printf("argument %d: %s\n", i, inputfile);
-	index = getIndexOf(inputfile);	
+	index = strncat(index,&inputfile[5],2);
 
 	printf("Index %d: %s\n", i, index);
 	
