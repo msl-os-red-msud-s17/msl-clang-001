@@ -19,7 +19,6 @@ typedef struct bstNode {
 
 void displayInOrder(bstNode *);
 
-<<<<<<< HEAD
 /*
  * Function: createNode
  *-----------------------
@@ -32,8 +31,6 @@ void displayInOrder(bstNode *);
  *
  * returns: bstNode with variables initialized.
  */
-=======
->>>>>>> arales
 bstNode * createNode(char * string) {
     bstNode* tempNode = (bstNode*) malloc(sizeof(bstNode));
     tempNode->word = (char *) malloc(sizeof(string));
@@ -120,25 +117,6 @@ void search(bstNode* root, char* word) {
  */
 void freeTree(bstNode * root) {
     if (root != NULL) {
-<<<<<<< HEAD
-        if (root->left) {
-            free(root->left);
-        }   
-        if (root->right) {
-            free(root->right);
-        }
-        free(root);
-        free(root->word);
-        printf("Tree freed from memory\n");
-    }
-}
-
-/*
- * Function: readWords
- *-----------------------
- * TODO (Function might change/obsolete)
- */
-=======
             if (root->left) {
                     free(root->left);
             }   
@@ -152,70 +130,6 @@ void freeTree(bstNode * root) {
     root = NULL;
 }
 
-
->>>>>>> arales
-void readWords(const char *filename, bstNode *root, int max_number_of_words) {
-    
-    FILE *f = fopen(filename, "rt");
-    int i;
-    char temp[100]; // assumption words are not longer than 100
-
-    for (i = 0; i < max_number_of_words; ++i)
-    {
-        // Read a word from the file
-        if (fscanf(f, "%s", temp) != 1)
-            break;
-        // "!=1" checks for end-of-file
-
-        // Allocate memory for the word and add to tree
-        insert(root, strdup(temp));
-    }
-    fclose(f);
-}
-
-<<<<<<< HEAD
-/*
- * Function:readWordsFromFile
- *------------------------
- * Reads words from a file and inserts them into a tree in
- * alphabetical order.
- *
- * filename: file of words you want to convert
- * node: root of binary tree
- * 
- * returns: root node of the tree.
- */
-bstNode * readWordsFromFile(const char *filename, bstNode * node) {
-    if (node == NULL) {
-        char * wordRead = (char *) malloc(sizeof(char *));
-        
-        if (filename != NULL) {
-            FILE *file = fopen(filename, "rt");
-            
-            // Read a word from the file
-            while(fscanf(file, "%s", wordRead) != EOF) {
-                if (wordRead == NULL) {
-                    break;
-                }
-            node = insert(node, wordRead);
-            }
-            free(wordRead);
-            fclose(file);
-        }
-    } // else {Trying to add second file to tree. do nothing}
-    
-    return node;
-}
-
-void outputFile(bstNode *tree) {
-  
-}
-
-int main(int argc, char *argv[]) {
-  int i;
- 
-  for (i = 1; i < argc; i++) {
-=======
 // get index of filename
 char * getIndexOf(char * filename) {
 
@@ -284,7 +198,7 @@ void outputFile(bstNode *tree, int index) {
 }
 
 int main(int argc, char **argv) {
->>>>>>> arales
+    int i;
     bstNode *root = NULL;
     char userword[50];
     char * wordFromFile = (char *) malloc(sizeof(char *));
@@ -297,24 +211,14 @@ int main(int argc, char **argv) {
         root = insert(root, userword);
         displayInOrder(root);
     }
-<<<<<<< HEAD
-    */
- 
-    printf("Reading from file...\n");
-    root = readWordsFromFile(argv[i], root);
-=======
  
     printf("Reading from file...\n");
     root = readWordsFromFile("input04.txt", root);
->>>>>>> arales
 
     displayInOrder(root);
     free(wordFromFile);
     freeTree(root);
-<<<<<<< HEAD
-  }
-  exit(0);
-=======
+
     //free(root);
     	
     root = NULL;
@@ -328,7 +232,7 @@ int main(int argc, char **argv) {
     char * index;
 
     // iterate over input file arguments
-    for (int i = 1; i < argc; i++) {
+    for (i = 1; i < argc; i++) {
 
 	inputfile = (char *) malloc(sizeof(char *));
         index = (char *) malloc(sizeof(char *));
@@ -348,40 +252,4 @@ int main(int argc, char **argv) {
     } 
 
     exit(0);
->>>>>>> arales
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
