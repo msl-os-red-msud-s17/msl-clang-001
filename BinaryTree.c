@@ -132,7 +132,8 @@ void freeTree(bstNode * root) {
 
 // get index of filename
 char * getIndexOf(char * filename) {
-	char * index;
+    
+    char * index;
     index = (char *) malloc(sizeof(char));
     int i = 0;
     
@@ -144,7 +145,7 @@ char * getIndexOf(char * filename) {
             i++;
         }      
     }
-    free(index);
+    //free(index);
     return index;
 }
 
@@ -175,10 +176,42 @@ bstNode * readWordsFromFile(const char *filename, bstNode * node) {
 	return node;
 }
 
-void outputFile(bstNode *tree, int index, FILE *output) {
+void outputFile(bstNode *tree, char *index, FILE *output) {
   fprintf(output,"The fucking output file");
   //Needs to be changed to correct format
   //Return file for main?
+
+       
+}
+
+FILE * makeOutputFile(bstNode *tree, char * inputfile) {
+    
+    FILE * output;
+    //char * index = getIndexOf(inputfile);
+    char * index = (char *) malloc(sizeof(char *));
+    char * outFilename = (char *) malloc(sizeof(char *));
+    strcpy(outFilename, "myoutput");
+    outFilename = strncat(outFilename, index, 2);    
+    //outFilename = strncat(outFilename, ".txt", 4);
+    
+    printf("index: %s\n", index);
+    printf("Output file name: %s\n", outFilename);
+
+    output = fopen(outFilename, "w+");
+
+    free(index);
+    free(outFilename);
+    return output;
+}
+
+void displayInOrderToFile(bstNode * root, FILE * file) {
+    if (root->left != NULL) {
+        displayInOrderToFile(root->left, file);
+    }
+    fprintf(file, "%s: %d\n", root->word, root->count);
+    if (root->right != NULL) {
+        displayInOrderToFile(root->right, file);
+    }   	
 }
 
 int main(int argc, char **argv) {
@@ -201,8 +234,8 @@ int main(int argc, char **argv) {
 	}
 
         //******Needs to be put in func? Combine the two?
-	outputF = fopen("Test.txt","w+");
-	outputFile(root,02,outputF);
+	//outputF = fopen("Test01.txt","w+");
+	//outputFile(root,index,outputF);
         //SHould look like ThisV
         //outputF = outputFile(root,index);
         //*******************************
@@ -217,8 +250,13 @@ int main(int argc, char **argv) {
 	root = readWordsFromFile(inputfile, root);
 	displayInOrder(root);
 
+	outputF = makeOutputFile(root, inputfile);
+
+	//format output file
+	displayInOrderToFile(root, outputF);	
+
 	freeTree(root);
-	
+	//free(index);	
 	root = NULL;
     } 
 
