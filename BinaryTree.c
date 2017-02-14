@@ -143,19 +143,23 @@ bstNode * readWordsFromFile(const char *filename, bstNode * node) {
 FILE * makeOutputFile(bstNode *tree, char * inputfile) {
     
     FILE * output;
+    /*
     char * index = (char *) malloc(sizeof(char *));
     index = strncat(index, &inputfile[5],2);
     char * outFilename = (char *) malloc(sizeof(char *));
     strcpy(outFilename, "output");
     outFilename = strncat(outFilename, index, 2);    
     outFilename = strncat(outFilename, ".txt", 4);
+    */
+
+    char *outFilename = "output00.txt";
+    outFilename[6] = inputfile[5];
+    outFilename[7] = inputfile[6];
     
     printf("Output file name: %s\n", outFilename);
 
     output = fopen(outFilename, "w+");
 
-    free(index);
-    free(outFilename);
     return output;
 }
 
